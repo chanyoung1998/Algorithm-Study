@@ -1,3 +1,6 @@
-a = [[1,2],[5,6],[3,4]]
+a = []
 
-print(a[1][1])
+for i in range(10):
+    a.append([0,0])
+a[0][0] = 10
+print(a)

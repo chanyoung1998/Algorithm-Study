@@ -8,3 +8,8 @@
 <1월 24>
 -2108번 미해결
 -10989번 런타임 및 메모리, 시간 에러 많이 났었음.,
+<1월25일>
+-2108번 해결 https://docs.python.org/3/library/collections.html#collections.Counter
+  ->counter를 사용하여 해결하면 간결하고 깔끔하게 코드 작성 가능하다
+-11650 :람다식 공부하기
+sort와 sorted의 차이
