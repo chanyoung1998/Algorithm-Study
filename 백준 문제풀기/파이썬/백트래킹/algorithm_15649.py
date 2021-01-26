@@ -11,7 +11,8 @@ visited = [False for _ in range(n+1)]
 nums = [i for i in range(1,n+1)]
 arr = []
 
-def dfs(cnt,visited):
+
+def dfs(cnt):
     if cnt == m:
         print(*arr)
         return
@@ -20,9 +21,11 @@ def dfs(cnt,visited):
         if not visited[i]:
             visited[i] = True
             arr.append(i)
-            dfs(cnt+1,visited)
-
+            dfs(cnt+1)
             visited[i] = False
             arr.pop()
 
-dfs(0,visited)
+
+
+dfs(0)
+
