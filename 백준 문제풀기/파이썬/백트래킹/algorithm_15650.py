@@ -5,24 +5,24 @@
 '''
 
 n,m = map(int,input().split())
-visited = [False for i in range(n+1)]
-arr = [0 for _ in range(m)]
-
-def sol(cnt):
-    if cnt == m:
-        print(*arr)
-        arr[cnt-1] = 0
-        return
-
-    for i in range(1,n+1):
-        if not visited[i]:
-            visited[i] = True
-            if arr[cnt] < i:
-                arr[cnt] = i
-                sol(cnt + 1)
-                visited[i] = False
+x = [0 for _ in range(n)]
 
 
+def sol(k):
+   if k <= n and x.count(1) == m:
+       temp = ''
+       for i in range(n):
+           if x[i] == 1:
+               temp += str(i+1) + ' '
+       print(temp)
+       return
 
+   if k == n:
+       return
+
+   x[k] = 1
+   sol(k+1)
+   x[k] = 0
+   sol(k+1)
 
 sol(0)
