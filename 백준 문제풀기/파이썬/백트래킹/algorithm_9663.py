@@ -11,15 +11,25 @@ list_ = []
 
 def NQueen(k):
     if k >= n:
-        #print(x)
+        print(x)
         list_.append(x)
         return
 
     for i in range(n):
-        if funk(x,k,i): # x[k] = i를 놓을수 있다면
+        flag = True
+        for j in range(k):
+            if x[j] == i or k - j + x[j] == i or x[j] - (k - j) == i:
+                flag = False
+        if flag:
+            x[k] = i
+            NQueen(k + 1)
+            x[k] = -1
+
+'''  for i in range(n):
+        if i < n and funk(x,k,i): # x[k] = i를 놓을수 있다면
             x[k] = i
             NQueen(k+1)
-            x[k] = -1
+            #x[k] = -1'''
 
 def funk(x,k,i):
     for j in range(k):
