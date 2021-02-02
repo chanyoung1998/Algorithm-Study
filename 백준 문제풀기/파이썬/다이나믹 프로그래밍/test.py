@@ -1,6 +1,3 @@
-dict = {(1,2,3):3,(3,2,1):2}
-
-if (1,2,4) in dict.keys():
-    print(True)
-else:
-    print(False)
+a = [0,0,0,0]
+a[0] = [1,2]
+print(a[0])

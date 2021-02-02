@@ -28,8 +28,8 @@ def w(a,b,c):
         ret_dic[(a - 1, b-1, c)] = temp2
         temp3 = w(a - 1, b, c - 1)
         ret_dic[(a - 1, b, c-1)] = temp3
-        temp4 = w(a - 1, b, c - 1)
-        ret_dic[(a - 1, b, c-1)] = temp4
+        temp4 = w(a - 1, b-1, c - 1)
+        ret_dic[(a - 1, b-1, c-1)] = temp4
         return temp1 + temp2 + temp3 - temp4
 inputs =[]
 while True:
