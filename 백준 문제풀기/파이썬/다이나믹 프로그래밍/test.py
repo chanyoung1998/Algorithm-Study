@@ -1,3 +1,3 @@
-a = [0,0,0,0]
-a[0] = [1,2]
-print(a[0])
+dp = []
+dp.append(1)
+dp.append(2)
