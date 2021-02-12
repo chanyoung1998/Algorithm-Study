@@ -12,8 +12,8 @@ def operate(k):
         return
     # arr[k]와arr[k+1]사이에 들어갈 operator결정하기
     for op,i in zip(operator,range(n-1)):
-        temp = array[k+1]
 
+        temp = array[k+1]
         if op == '//' and array[k] < 0:
             x = -array[k]
             array[k+1] = -eval(str(x) + op + str(array[k+1]))
