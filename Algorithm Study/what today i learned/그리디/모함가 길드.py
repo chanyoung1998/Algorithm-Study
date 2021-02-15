@@ -3,6 +3,11 @@
 n = int(input())
 adventurers = list(map(int,input().split()))
 adventurers.sort()
-count = 0
-
+count = 0 #현재 만들어 지고 있는 그룹에 포험된 모험가의 수
+group = 0 #그룹의 수
 for adventurer in adventurers:
+    count += 1
+    if count >= adventurer:
+        group += 1
+        count = 0
+print(group)
