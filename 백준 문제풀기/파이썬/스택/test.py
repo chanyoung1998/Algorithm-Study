@@ -1,4 +1,4 @@
-a = [1,2,3,4]
-b =  [5,6,7]
-c = a +b[::-1]
-print(c.pop(0))
+from collections import deque
+a = deque(['1', '2', '3', '5', '8'])
+for i in a:
+    print(i)
