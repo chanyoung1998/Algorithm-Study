@@ -1,10 +1,3 @@
-'''
-내용:백준 알고리즘 단계별 풀기 큐 11866 요세푸스 문제0
-날짜:21년2월18일
-사용 언어:파이썬
-'''
-
-
 from collections import deque
 n, k =map(int, input().split())
 deq = deque(range(1,n+1))
@@ -31,24 +24,3 @@ for i,data in enumerate(ret):
         ret_str += str(data)+', '
 
 print(ret_str)
-
-'''
-from collections import deque
-n, k = map(int, input().split())
-numbers = deque(i for i in range(1, n + 1))
-
-print('<', end='')
-while numbers:
-    for i in range(k - 1):
-        numbers.append(numbers[0])
-        numbers.popleft()
-    print(numbers.popleft(), end='')
-
-    if numbers:
-        print(',', end=' ')
-print('>')
-'''
-
-
-
-
