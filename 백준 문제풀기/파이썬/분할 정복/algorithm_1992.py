@@ -30,7 +30,9 @@ def sol(image):
 
 n = int(sys.stdin.readline())
 image = [list(map(int, sys.stdin.readline().rstrip())) for _ in range(n)]
-ret = '('
+ret =''
+
+'''ret = '('
 flag_0 = True
 flag_1 = True
 for _ in range(n):
@@ -53,4 +55,6 @@ else:
 
     print(ret + ')')
 
-
+'''
+sol(image)
+print(ret)
