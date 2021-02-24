@@ -6,6 +6,5 @@
 n, k = map(int,input().split())
 ret = 1
 for i,j in enumerate(range(n,n-k,-1)):
-    ret = ret * j
-    ret = ret // (i+1)
-print(ret)
+    ret = ret * j // (i+1)
+print(ret % 1000000007)
