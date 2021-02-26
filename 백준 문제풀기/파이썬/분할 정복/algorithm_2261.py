@@ -12,17 +12,19 @@ def distance(p1,p2):
 
 def sol(start,end):
     global min_distance
-    if start == end:
-        return
-    elif end - start == 1:
+
+    if end - start == 1:
         min_distance = min(min_distance, distance(points[start],points[end]))
+        return
+    elif end -start == 2:
+        min_distance = min(min_distance,distance(points[0],points[1]),distance(points[0],points[2]),distance(points[1],points[2]))
         return
 
     mid = (start+end) // 2
     sol(start, mid)
     sol(mid+1, end)
 
-    mid_x = (points[mid][0]+points[mid-1][0])//2
+    mid_x = points[mid][0]
     temp = []
     for i in range(start,end+1):
         if (points[i][0]- mid_x)**2 <= min_distance:
@@ -32,6 +34,8 @@ def sol(start,end):
     temp.sort(key=lambda x: x[1])
     for i in range(len(temp)):
         for j in range(i+1,len(temp)):
+            if temp[j][1]-temp[i][1] > min_distance or j >= i +7:
+                break
             if j < i+7:
                 min_distance = min(min_distance,distance(temp[i],temp[j]))
     return
