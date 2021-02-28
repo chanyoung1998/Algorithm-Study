@@ -13,7 +13,7 @@ def LIS(n):
         return
 
     dp[0] = 1
-    #dp[i]값 결정하기
+    #dp[i]값 결정하기, A[i]를 포함 했을 때의 가장 긴 증가하는 부분수열의 길이
     for i in range(1,n):
         temp = [0]
         for j in range(i):
