@@ -30,14 +30,14 @@ for t in target:
     # t이상인 값이 처음 나오는 위치
     lower_bound = e
 
-    if upper_bound == lower_bound:
-        print(0, end=' ')
-    else:
-        if upper_bound == n-1 and array[upper_bound] == t:
-            print(upper_bound - lower_bound + 1, end=' ')
-        else:
-            print(upper_bound - lower_bound, end=' ')
 
+
+    if upper_bound == n-1 and array[upper_bound] == t:
+        print(upper_bound - lower_bound + 1, end=' ')
+    elif upper_bound != lower_bound:
+        print(upper_bound - lower_bound, end=' ')
+    elif upper_bound == lower_bound:
+        print(0, end=' ')
 
 
 
