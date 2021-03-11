@@ -10,19 +10,12 @@ n, k = map(int,sys.stdin.readline().split())
 value = [int(sys.stdin.readline()) for _ in range(n)]
 
 dp = [0 for _ in range(k+1)]
+dp[0] = 1
 
-for i,v in enumerate(value):
-    for j in range(1,k+1):
-
-        if i > 0:
-            count = 0
-            temp = j
-            while temp > 0 :
-                count += 1
-                temp -= v
-            dp[j] += count
-
-        if j % v == 0:
-            dp[j] += 1
+# v일 때 dp[i] += dp[i-v]
+for v in value:
+    for i in range(1,k+1):
+        if i - v >= 0:
+            dp[i] += dp[i-v]
 
 print(dp[k])

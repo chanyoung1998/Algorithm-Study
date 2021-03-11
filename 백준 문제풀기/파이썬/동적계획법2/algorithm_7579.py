@@ -5,31 +5,27 @@
 '''
 
 import sys
-from collections import deque
+
 N,M = map(int,sys.stdin.readline().split())
-memory = list(map(int,sys.stdin.readline().split()))
+memories = list(map(int,sys.stdin.readline().split()))
 costs = list(map(int,sys.stdin.readline().split()))
+dp = [[0 for _ in range(sum(costs) + 1)] for _ in range(N)]
 
-dp_m = deque([0,memory[0]])
-dp_c = deque([0,costs[0]])
-min = sys.maxsize
-i = 1
-while i != N:
-    pop_memory = dp_m.popleft()
-    pop_cost = dp_c.popleft()
+for i in range(costs[0],sum(costs) + 1):
+    dp[0][i] = memories[0]
 
-    if pop_memory + memory[i] >= M:
-        if min > pop_cost + costs[i]:
-            min = pop_cost + costs[i]
-    else:
-        dp_m.append(pop_memory)
-        dp_c.append(pop_cost)
+for i in range(1,N):
+    for j in range(sum(costs) + 1):
+        if costs[i] > j:
+            dp[i][j] = dp[i-1][j]
+        else:
+            dp[i][j] = max(memories[i] + dp[i-1][j-costs[i]], dp[i-1][j])
 
 
-if N == 1:
-    print(costs[0])
-else:
-    print(min)
+for _ in range(sum(costs) + 1):
+    if dp[N-1][_] >= M:
+        print(_)
+        break
 
 
 

@@ -11,8 +11,8 @@ value = [int(sys.stdin.readline()) for _ in range(n)]
 
 dp = [[0 for _ in range(k+1)] for _ in range(n)]
 # dp[i][k]
-# :i 번째 까지 동전으로 k만드는 경우의 수
-for i,v in enumerate(value):
+# :i 번째까지 동전으로 k만드는 경우의 수
+for i, v in enumerate(value):
     for j in range(1,k+1):
         if i > 0:
             dp[i][j] += dp[i-1][j]
