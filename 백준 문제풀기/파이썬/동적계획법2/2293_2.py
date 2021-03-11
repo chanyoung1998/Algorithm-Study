@@ -5,7 +5,7 @@
 '''
 # 사용한 동전의 구성이 같은데, 순서만 다른 것은 같은 경우이다.
 import sys
-#메모리 초과 발생
+
 n, k = map(int,sys.stdin.readline().split())
 value = [int(sys.stdin.readline()) for _ in range(n)]
 
