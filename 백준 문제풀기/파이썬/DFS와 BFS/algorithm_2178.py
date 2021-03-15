@@ -14,7 +14,6 @@ dy = [0, 1, 0, -1]
 def bfs(x,y):
     queue = deque()
     queue.append([x,y])
-    count = 0
     while queue:
         a, b = queue.popleft()
         for i in range(4):
