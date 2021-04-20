@@ -7,21 +7,20 @@
 import sys
 
 n = int(sys.stdin.readline().rstrip())
-array = list(map(int,sys.stdin.readline().rstrip().split()))
-temp = [[array[0]]]
-
-for i in array[1:]:
-    check = False
-    for temp_lcs in temp:
-        if temp_lcs[-1] < i:
-            temp_lcs.append(i)
-        else:
-            check = True
-
-    for temp_lcs in temp:
-        pass
-
-    if check:
-        temp.append([i])
-
-
+numbers = list(map(int,sys.stdin.readline().rstrip().split()))
+dp = [1 for _ in range(n)]
+array = [[x] for x in numbers]
+for i in range(n):
+    for j in range(i):
+        if numbers[i] > numbers[j]:
+            if dp[i] < dp[j] + 1:
+                dp[i] = dp[j] + 1
+                array[i] = array[j] + [numbers[i]]
+length = 0
+flag = 0
+for i in range(n):
+    if length < dp[i]:
+        flag = i
+        length = dp[i]
+print(length)
+print(*array[flag])
