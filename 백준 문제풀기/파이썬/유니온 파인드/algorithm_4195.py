@@ -5,7 +5,7 @@
 '''
 
 import sys
-sys.setrecursionlimit(10**6)
+
 def find(x):
     if parent[x] < 0:
         return x
@@ -16,7 +16,8 @@ def find(x):
 def union(x,y):
     x = find(x)
     y = find(y)
-
+    if x == y:
+        return
     parent[x] += parent[y]
     parent[y] = x
 
