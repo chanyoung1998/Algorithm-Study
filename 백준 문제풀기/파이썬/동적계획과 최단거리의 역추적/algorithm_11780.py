@@ -25,8 +25,13 @@ for k in range(n):
                 dp[i][j] = dp[i][k] + dp[k][j]
                 path[i][j] = path[i][k] + [k] + path[k][j]
 for ret in dp:
-    print(*ret)
-print(path)
+    for i in ret:
+        if i == INF:
+            print(0,end=' ')
+        else:
+            print(i,end=' ')
+    print()
+
 for i in range(n):
     for j in range(n):
         if dp[i][j] == 0 or dp[i][j] == INF:
