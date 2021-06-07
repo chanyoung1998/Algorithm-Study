@@ -1,5 +1,5 @@
 import sys
-
+# https://giiro.tistory.com/entry/%EB%B0%B1%EC%A4%80-20167-20181-%EA%BF%88%ED%8B%80%EA%BF%88%ED%8B%80-%ED%98%B8%EC%84%9D-%EC%95%A0%EB%B2%8C%EB%A0%88-%EA%B8%B0%EB%8A%A5%EC%84%B1-%ED%9A%A8%EC%9C%A8%EC%84%B1
 n, k = map(int,sys.stdin.readline().rstrip().split())
 food = list(map(int,sys.stdin.readline().rstrip().split()))
 memorization = [0 for _ in range(n+1)]
@@ -26,7 +26,7 @@ memorization = [0 for _ in range(n+1)]
 
 
 sol(0)
-print(memorization[0])
+print(memorization)
 '''
 
 
