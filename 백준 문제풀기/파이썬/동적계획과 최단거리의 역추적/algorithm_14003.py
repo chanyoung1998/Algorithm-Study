@@ -20,7 +20,6 @@ n = int(input())
 array = list(map(int,input().split()))
 ret = [-sys.maxsize]
 count = 0
-x = 0
 dp = [0 for _ in range(n+1)]
 
 for x in range(len(array)):
@@ -33,7 +32,7 @@ for x in range(len(array)):
         ret[dp[x]] = array[x]
 
 print(count)
-
+print(dp)
 res = []
 max_val = count
 for i in range(n, -1, -1):
