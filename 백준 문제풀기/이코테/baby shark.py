@@ -66,32 +66,6 @@ ret = 0
 eaten = 0
 while True:
 
-    can_eat = 0
-    for i in range(1,shark_size):
-        if i <= 6:
-            can_eat += len(fish_list[i])
-        else:
-            break
-
-    if can_eat == 0:
-        break
-
-    '''if can_eat == 1:
-        x = 0
-        y = 0
-
-        for i in range(1, shark_size):
-            if i >= 7:
-                break
-            for (p, q) in fish_list[i]:
-                x,y = p,q
-                fish_list[i].remove((p,q))
-
-        dist = bfs2(cur_x, cur_y,x,y)
-        ret += dist
-        cur_x = x
-        cur_y = y
-    elif can_eat >= 2:'''
     distances = []
     dist_map = bfs(cur_x, cur_y)
 
@@ -99,19 +73,23 @@ while True:
         if i >= 7:
             break
         for (x,y) in fish_list[i]:
+            if dist_map[x][y] == -1:
+                continue
             distances.append((x,y,dist_map[x][y],i))
 
-    distances.sort(key=lambda x:(x[2],x[0],x[1]))
-    #print("min",distances[0][2],"x",distances[0][0],"y",distances[0][1])
-    ret += distances[0][2]
-    fish_list[distances[0][3]].remove((distances[0][0],distances[0][1]))
-    cur_x = distances[0][0]
-    cur_y = distances[0][1]
+    if len(distances) != 0:
+        distances.sort(key=lambda x:(x[2],x[0],x[1]))
 
+        ret += distances[0][2]
+        fish_list[distances[0][3]].remove((distances[0][0],distances[0][1]))
+        cur_x = distances[0][0]
+        cur_y = distances[0][1]
 
-    eaten += 1
-    if eaten == shark_size:
-        shark_size += 1
-        eaten = 0
+        eaten += 1
+        if eaten == shark_size:
+            shark_size += 1
+            eaten = 0
+    else:
+        break
 
 print(ret)
