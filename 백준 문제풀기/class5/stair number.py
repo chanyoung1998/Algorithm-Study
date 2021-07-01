@@ -1,5 +1,5 @@
 import sys
-
+#시간 초과 ver
 n = int(sys.stdin.readline())
 array = [-1 for _ in range(n)]
 IsIncluded = [[] for _ in range(10)]
