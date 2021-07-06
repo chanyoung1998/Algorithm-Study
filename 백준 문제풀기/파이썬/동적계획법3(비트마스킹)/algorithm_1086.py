@@ -30,12 +30,14 @@ def sol(l,bit,mod):
     if dp[bit][mod] != -1:
         return dp[bit][mod]
 
+
+    dp[bit][mod] = 0
     for i in range(n):
         if bit & 1 << i == 0:
             dp[bit][mod] += sol(l + length[i], bit | 1 << i, (mod + rm[i][l]) % k)
         # rm배열 없을 때 코드
         # dp[bit][mod] += sol(length + length[i],bit | 1 << i, (mod+(sets[i]%k)*(10**length)) % k)
-    dp[bit][mod] += 1
+
     return dp[bit][mod]
 
 temp = sol(0,0,0)
