@@ -1,136 +1,138 @@
 import sys
 import copy
+# deep copy 해야하는 것 잊지 말기
 n = int(sys.stdin.readline())
 board = [list(map(int,sys.stdin.readline().rstrip().split())) for _ in range(n)]
 
 def up(board):
+    temp = copy.deepcopy(board)
     #i열 부터 검사
     for i in range(n):
         j = 0
         while j < n:
-            if board[j][i] == 0:
+            if temp[j][i] == 0:
                 onlyZero = True
                 for k in range(j,n-1):
-                    if board[k+1][i] != 0:
+                    if temp[k+1][i] != 0:
                         onlyZero = False
-                    board[k][i] = board[k+1][i]
-                board[n-1][i] = 0
+                    temp[k][i] = temp[k+1][i]
+                temp[n-1][i] = 0
                 if onlyZero:
                     j += 1
                 continue
 
-            target = board[j][i]
+            target = temp[j][i]
             for k in range(j+1,n):
-                if board[k][i] == target:
-                    board[j][i] *= 2
-                    board[k][i] = 0
+                if temp[k][i] == target:
+                    temp[j][i] *= 2
+                    temp[k][i] = 0
                     break
-                elif board[k][i] == 0:
+                elif temp[k][i] == 0:
                     continue
                 else:
                     break
             j += 1
 
-    return board
+    return temp
 
 def down(board):
-
+    temp = copy.deepcopy(board)
     # i열 부터 검사
     for i in range(n):
         j = n-1
         while j >= 0:
-            if board[j][i] == 0:
+            if temp[j][i] == 0:
                 onlyZero = True
                 for k in range(j,0,-1):
-                    if board[k - 1][i] != 0:
+                    if temp[k - 1][i] != 0:
                         onlyZero = False
-                    board[k][i] = board[k - 1][i]
-                board[0][i] = 0
+                    temp[k][i] = temp[k - 1][i]
+                temp[0][i] = 0
                 if onlyZero:
                     j -= 1
                 continue
 
-            target = board[j][i]
+            target = temp[j][i]
             for k in range(j-1,-1,-1):
-                if board[k][i] == target:
-                    board[j][i] *= 2
-                    board[k][i] = 0
+                if temp[k][i] == target:
+                    temp[j][i] *= 2
+                    temp[k][i] = 0
                     break
-                elif board[k][i] == 0:
+                elif temp[k][i] == 0:
                     continue
                 else:
                     break
             j -= 1
 
-    return board
+    return temp
 
 def left(board):
-
+    temp = copy.deepcopy(board)
     #i행 부터 검사
     for i in range(n):
         j = 0
         while j < n:
-            if board[i][j] == 0:
+            if temp[i][j] == 0:
                 onlyZero = True
                 for k in range(j,n-1):
-                    if board[i][k+1] != 0:
+                    if temp[i][k+1] != 0:
                         onlyZero = False
-                    board[i][k] = board[i][k+1]
-                board[i][n-1] = 0
+                    temp[i][k] = temp[i][k+1]
+                temp[i][n-1] = 0
                 if onlyZero:
                     j += 1
                 continue
 
-            target = board[i][j]
+            target = temp[i][j]
             for k in range(j+1,n):
-                if board[i][k] == target:
-                    board[i][j] *= 2
-                    board[i][k] = 0
+                if temp[i][k] == target:
+                    temp[i][j] *= 2
+                    temp[i][k] = 0
                     break
-                elif board[i][k] == 0:
+                elif temp[i][k] == 0:
                     continue
                 else:
                     break
             j += 1
 
-    return board
+    return temp
 
 def right(board):
     # i행 부터 검사
-
+    temp = copy.deepcopy(board)
     for i in range(n):
         j = n - 1
         while j >= 0:
-            if board[i][j] == 0:
+            if temp[i][j] == 0:
                 onlyZero = True
                 for k in range(j, 0, -1):
-                    if board[i][k-1] != 0:
+                    if temp[i][k-1] != 0:
                         onlyZero = False
-                    board[i][k] = board[i][k-1]
-                board[i][0] = 0
+                    temp[i][k] = temp[i][k-1]
+                temp[i][0] = 0
                 if onlyZero:
                     j -= 1
                 continue
 
-            target = board[i][j]
+            target = temp[i][j]
             for k in range(j - 1, -1, -1):
-                if board[i][k] == target:
-                    board[i][j] *= 2
-                    board[i][k] = 0
+                if temp[i][k] == target:
+                    temp[i][j] *= 2
+                    temp[i][k] = 0
                     break
-                elif board[i][k] == 0:
+                elif temp[i][k] == 0:
                     continue
                 else:
                     break
             j -= 1
 
-    return board
+    return temp
 
 ret = 0
 def sol(count,board):
     global ret
 
-    temp = copy.deepcopy(board)
+
 
     if count == 5:
         for i in range(n):
@@ -140,16 +142,16 @@ def sol(count,board):
     for i in range(4):
        # print(board)
         if i == 0:
-            new_board = up(temp)
+            new_board = up(board)
             sol(count+1,new_board)
         elif i == 1:
-            new_board = down(temp)
+            new_board = down(board)
             sol(count+1, new_board)
         elif i == 2:
-            new_board = left(temp)
+            new_board = left(board)
             sol(count+1, new_board)
         elif i == 3:
-            new_board = right(temp)
+            new_board = right(board)
             sol(count+1, new_board)
 
     return
