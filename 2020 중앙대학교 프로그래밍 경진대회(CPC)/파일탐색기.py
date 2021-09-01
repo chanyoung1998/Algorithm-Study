@@ -12,6 +12,7 @@ for _ in range(n):
 
 alphabet = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
 
+# return 값이 0보다 작으면(False이면) sort(swap)안하고 0보다 크면(True이면)sort하고 0이면 그대로.
 def comp(a,b):
     for i in range(min(len(a[1]), len(b[1]))):
         if a[1][i].isdigit() and b[1][i].isalpha():
