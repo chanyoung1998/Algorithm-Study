@@ -1,0 +1,496 @@
+
+1. DP란?
+
+DP(Dynamic Programming)는 뭘까?
+
+우리나라 말로는 동적계획법이라 한다.
+
+뭐 이름이 중요하진 않다.
+
+(이 이름도 연구비 잘 받으려면 간지가 필요해 이렇게 붙였다고 한다. 아무 의미가 없음 ㅡ,.ㅡ;; )
+
+
+
+아무튼 DP란, 수학적 귀납법을 이용한 문제풀이 기법이다.
+
+수학적 귀납법이란 다음과 같다.
+
+자연수에 관한 명제 P(n)이 모든 자연수(또는, 어떤 자연수보다 큰 모든 자연수)에 대하여 성립함을 보이는 증명법이다.[1] 증명은 두 부분으로 구성되는데, 첫 번째 부분은 최소원 n=n
+0
+​
+ 에 대해 P(n
+0
+​
+ )가 성립함을 보이는 부분이며, 두 번째 부분에서는 어떤 자연수 k에 대해 P(k)가 성립한다는 가정 하에 P(k+1) 또한 성립함을 보이게 된다. - 출처: 나무위키(https://namu.wiki/w/수학적%20귀납법)
+
+
+
+항상 말은 거창하지만, 요약하면 다음과 같다.
+
+어떤 상태(N)와 그 다음 상태(N+1)를 정의하는 식을 각각 f(N), f(N+1)이라 하고,
+
+f(N+1)이 f(N)으로 부터 유도가 가능하면, 임의의 값 x에 대해서 f(x)값도 매우 쉽게 구할 수 있다는 것이다.
+
+여기서 f(x+1) = af(x)+b와 같은 식을 점화식이라고 한다. (x라는 상태로 부터 x+1이라는 상태를 유도, x라는 상태는 언제 구해도 변하지 않도록 정의)
+
+
+
+밑에서 계속 살펴보겠지만, DP문제는 이 점화식만 구하면 코딩은 너무나도 쉽다.
+
+(DP문제 == 점화식을 세울 수 있는 문제 == 어떤 상태를 명확하게 정의할 수 있는 문제)
+
+
+
+
+
+그럼 이제 DP문제중에 가장 대표적인 피보나치 수열을 살펴보자.
+
+
+
+피보나치 수열은 f(n+2) = f(n+1) + f(n) (n>=1, f(1)=f(2)=1)을 만족하는 수열이다.
+
+펼쳐서 써보면 다음과 같다.
+
+1 1 2 3 5 8 13 21 34 55 89 144 ...
+
+
+
+그럼 50번째 피보나치 수열을 구하는 코드를 짜보자.
+
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+#include <cstdio>
+using namespace std;
+long long v[101];
+int main() {
+    v[1]=v[2]=1LL;
+    int n; scanf("%d", &n);
+    for(int i=1; i<=n-2; i++) {
+        v[i+2]=v[i+1]+v[i];
+    }
+    printf("%lld", v[n]);
+    return 0;
+}
+cs
+
+
+위의 코드가 DP(동적계획법)로 피보나치 수열 문제를 해결한 것이다.
+
+
+
+
+
+다시 정리해보자.
+
+DP문제는 점화식을 세우고,
+
+해당 점화식을 코드로 구현하는 문제라 할 수 있다.
+
+바꿔 말해 점화식을 세울 수 없다면,
+
+해당 문제를 동적계획법(DP)으로 풀 수 없다.
+
+
+
+그럼 DP를 코드로 구현하는데 주의해야할 점은 무엇일까?
+
+그것은 바로 메모(Memo)다.
+
+이를 엄밀히 말하면 Memoization이라고 하는데,
+
+두 번 이상 계산하지 않기 위해 처음 정답을 구했을 때 메모리에 기록하는 것을 의미한다.
+
+
+
+그럼 위의 코드가 어디서 메모를 한다는 것일까?
+
+위의 코드는 반복문 형태로 구현되었기 때문에 Memoization기법을 이용하고 있지 않다.
+
+하지만 재귀형태로 DP문제를 푼다면 반드시 Memoization 방식이 따라와야 한다.
+
+
+
+
+
+그럼 피보나치 수열 문제를 재귀적으로 코딩해보자.
+
+f(n) = f(n-1) + f(n-2) 라는 점화식만 이용하면 아래와 같이 간단하게 코딩할 수 있다.
+
+
+
+※주의! 이 코드는 문제가 있다.
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+#include <cstdio>
+using namespace std;
+long long v[101];
+long long f(int x) {
+    if(x==1||x==2) return 1LL;
+    else return f(x-1)+f(x-2);
+}
+int main() {
+    int n;
+    scanf("%d", &n);
+    printf("%lld", f(n));
+    return 0;
+}
+cs
+※주의! 이 코드는 문제가 있다.
+
+
+
+그런데 위의 코드에는 문제가 있다.
+
+
+
+코드를 빌드해서 50이라는 숫자를 입력해보자.
+
+답이 한참 후에 나온다.
+
+왜냐하면 메모(Memo)를 하지 않았기 때문이다.
+
+
+
+f(50)을 구하기 위해 f(48)이 2번 필요한데,
+
+f(48)을 한번 계산했음에도 불구하고 다시 또 계산하는 바보같은 짓을 하고 있다.
+
+이런 바보같은 짓은 재귀적으로 호출이 내려가면 내려갈수록 기하급수적으로 커져,
+
+f(50)이라는 숫자를 구하기 위해선 f(5)를 1836311903번이나 불러오게 된다.
+
+
+
+그럼 f(x)라는 값을 구하고 나면 이를 간단하게 배열에 저장해두면 어떨까?
+
+이게 바로 Memoization이다. (Memorization아님! Memoization!!)
+
+#include <cstdio>
+#include <cstring>
+using namespace std;
+long long v[101], d[101];
+long long f(int x) {
+    if(x==1||x==2) return 1LL; //base case
+    else if(d[x]) return d[x]; //d배열 값이 0이 아니면 memo한적이 있다는 뜻.
+    else return d[x]=f(x-1)+f(x-2); //memoization
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    memset(d, 0, sizeof(d)); //d배열을 모두 0으로 초기화
+    printf("%lld\n", f(n));
+    return 0;
+}
+Colored by Color Scripter
+cs
+
+
+DP문제는 이처럼 반복문 형태로 풀거나 재귀 형태로 푸는 방법이 있는데,
+
+처음 접하는 사람들은 반복문 형태가 쉽다고 하지만,
+
+몇 문제만 더 풀어봐도 재귀가 훨씬 쉬운것을 알 수 있다.
+
+왜냐면 점화식만 생각해낸다면, 코딩하는 방식은 항상 똑같기 때문이다.
+
+
+
+base case 써주고 (위의 코드에서 6번째 줄)
+
+memo한거 활용해주고 (위의 코드에서 7번째 줄)
+
+계산후에 memo해줌. (위의 코드에서 8번째 줄)
+
+
+
+이거면 끝이기 때문이다.
+
+
+
+물론 둘다 풀줄 알아야 한다.
+
+재귀로 풀었을때 시간복잡도를 줄일 수 없는 경우가 있어 재귀로 풀 수 없는 경우도 있고,
+
+반대로 반복문으로 풀 수 없는 경우도 있기 때문이다.
+
+
+
+
+
+2. Knapsack
+
+그럼 이제 Knapsack문제에 대해서 알아보자.
+
+
+
+DP문제에서 가장 처음에 기본적으로 다루는 문제가 바로 냅색 문제다.
+
+보통 가방에 무게제한 W가 있고, 이 무게제한을 넘지 않으면서 무게가 w인 물건을 담을 때 가치(value)가 최대가 되도록 하는 문제가 바로 냅색 문제다.
+
+
+
+좀더 깔끔하게 문제를 정의해보자.
+
+
+
+무게가 w이고 가치가 v인 아이템이 N개 주어진다.
+
+가방의 무게제한은 W일 때, 무게제한이 초과하지 않도록 아이템들을 담을 때 최대로 낼 수 있는 가치의 합은?
+
+
+
+첫번째 줄에 N, W가 주어지고
+
+그 다음 N개의 줄에는 (w, v)쌍으로 아이템들의 정보가 주어진다.
+
+
+
+input
+4 5
+
+2 3
+
+1 2
+
+3 4
+
+2 2
+
+output
+7
+
+
+
+이런 문제가 주어지면 이 문제가 DP문제인지 어떻게 알까?
+
+먼저 가장 무식하게 생각해보자.
+
+모든 조합을 다 해보면 알 수 있을 것이다.
+
+그런데 이러한 방법은 \binom{N}{0} + \binom{N}{1} +\binom{N}{2} + ... + \binom{N}{N} = 2^N만큼 걸린다.
+
+
+
+N이 100만 되어도 아닌 방법임을 직감할 수 있다.
+
+
+
+이 방법을 다시한번 살펴보자.
+
+아닌 방법임을 알지만, 역시 완전탐색 형태로 이를 코딩 할줄 알아야 한다.
+
+
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+#define w first
+#define v second
+using namespace std;
+typedef pair<int,int> pii;
+vector<pii> I;
+int N,W;
+int f(int i, int m) {
+    if(i>=N) return 0;
+
+    int ans=0;
+    if(m-I[i].w>=0) ans = max(f(i+1,m-I[i].w)+I[i].v, f(i+1,m));
+    else ans = f(i+1, m);
+    return ans;
+}
+int main() {
+    scanf("%d%d", &N,&W);
+    for(int i=0; i<N; i++) {
+        int wei,val;
+        scanf("%d%d", &wei,&val);
+        I.emplace_back(pii(wei,val));
+    }
+    printf("%d\n", f(0,W));
+    return 0;
+}
+Colored by Color Scripter
+cs
+
+
+이 방법은 아이템을 넣는다와 넣지 않는다로만 구분해서 모든 경우의 수를 생각한 것이다.
+
+f(i,m)는 I(=item)를 0부터 i까지 봤을 때, m이라는 무게제한으로 담을 수 있는 최대의 가치이다.
+
+
+
+여기서 트리를 그려보면, 임의의 x,y에 대해 f(x,y)라는 부분이 중복적으로 호출 됨을 알 수 있다.
+
+또, I를 0부터 i까지 봤을 때, m이라는 무게제한으로 담을 수 있는 최대가치(f(i,m))는 절대 불변이다.
+
+그러니까 예를 들면, f(3,5)라는 값을 한번 구했는데 다음번에 f(3,5)를 들여다 본다고 해서 값이 달라지지 않는다.
+
+
+
+그럼 이제 위의 코드를 메모만 해주면 f(x,y) 형태의 함수가 여러번 중복으로 호출되는 것을 막을 수 있다.
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+#define w first
+#define v second
+using namespace std;
+typedef pair<int,int> pii;
+vector<pii> I; //item을 의미
+int N,W,dp[101][10001];
+int f(int i, int m) {
+    if(i>=N) return 0;
+
+    int &ans=dp[i][m];
+    if(ans>=0) return ans; //dp배열에 메모된적이 있다면 계산 하지 않고 바로 리턴
+    else ans=0; //dp배열에 메모된적이 없다면 -1인 dp배열값을 0으로 바꿔준다. (방문한적이 있음을 표시)
+
+    if(m-I[i].w>=0) ans = max(f(i+1,m-I[i].w)+I[i].v, f(i+1,m));
+    else ans = f(i+1, m);
+    return ans;
+}
+int main() {
+    memset(dp,-1,sizeof(dp)); //dp 테이블을 -1로 초기화
+    scanf("%d%d", &N,&W);
+    for(int i=0; i<N; i++) {
+        int wei,val;
+        scanf("%d%d", &wei,&val);
+        I.emplace_back(pii(wei,val));
+    }
+    printf("%d\n", f(0,W));
+    return 0;
+}
+Colored by Color Scripter
+cs
+
+
+여기서 시간복잡도는 O(NW)이다.
+
+dp배열 하나를 채우기 위해선 O(1)의 시간이 필요하기 때문이다.
+
+
+
+그럼 이 코드를 반복문으로도 짜보자.
+
+위의 점화식은 f(i,m) = max(f(i+1,m-I[i].w)+I[i].v, f(i+1,m)) 인데,
+
+i를 채우기 위해서는 i+1이외의 배열이 필요하지 않다.
+
+다시말해서 f(i,...) = max(f(i+1, ...)+..., f(i+1, ...)); 형태란 뜻이다.
+
+그런데 이를 반복문 짤 때 잘못 짜면 아래와 같이 문제가 생길 수 있다.
+
+
+
+※주의! 이 코드는 틀린 코드
+
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+#define w first
+#define v second
+using namespace std;
+typedef pair<int,int> pii;
+vector<pii> I;
+int N,W,dp[10001];
+int main() {
+    scanf("%d%d", &N,&W);
+    for(int i=0; i<N; i++) {
+        int wei,val;
+        scanf("%d%d", &wei,&val);
+        I.emplace_back(pii(wei,val));
+    }
+    for(int i=0; i<N; i++) {
+        for(int j=I[i].w; j<=W; j++) { //이 부분이 문제다!
+            dp[j]=max(dp[j], dp[j-I[i].w]+I[i].v);
+        }
+    }
+    printf("%d\n", dp[W]);
+    return 0;
+}
+Colored by Color Scripter
+cs
+※주의! 이 코드는 틀린 코드
+
+
+
+18번째 줄이 문제다.
+
+왜 문제일까?
+
+우리가 i라는 인덱스에서 아직 갱신되지 않은 dp[j-I[i].w]를 들여다 본다는 것은 2차원 배열에서 dp[i-1][j-I[i].w]를 들여다보는 것과 같다.
+
+그런데, j값을 0부터 W까지 오름차순으로 들여다 본다면, dp[j-I[i].w]값은 2차원으로 봤을때 dp[i][j-2*I[i].w]+I[i].v일 수도 있다.
+
+이는 item을 중복해서 여러번 사용하는 결과를 초래한다.
+
+
+
+그러므로 j값은 W부터 I[i].w까지 내림차순으로 반복문을 돌려야 한다.
+
+많이 실수 하는 부분이므로 상당히 주의해야한다.
+
+위의 잘못된 코드를 아래와 아래와 같이 수정했다.
+
+
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+#define w first
+#define v second
+using namespace std;
+typedef pair<int,int> pii;
+vector<pii> I;
+int N,W,dp[10001];
+int main() {
+    scanf("%d%d", &N,&W);
+    for(int i=0; i<N; i++) {
+        int wei,val;
+        scanf("%d%d", &wei,&val);
+        I.emplace_back(pii(wei,val));
+    }
+    for(int i=0; i<N; i++) {
+        for(int j=W; j>=I[i].w; j--) { //위의 코드는 이렇게 수정되어야 한다.
+            dp[j]=max(dp[j], dp[j-I[i].w]+I[i].v);
+        }
+    }
+    printf("%d\n", dp[W]);
+    return 0;
+}
+Colored by Color Scripter
+cs
+
+
+
+
+그럼 우리는 여기서 중요한 사실을 하나 알 수 있는데,
+
+knapsack문제에서 아이템을 중복되게 고를 때는 아까 잘못된 코드와 같이 코딩하면 된다는 것이다.
+
+반복문을 어떤 방향으로 돌리냐에 따라 확연한 차이가 있으므로 항상 주의하자~!
+
+
+
+출처: https://plzrun.tistory.com/entry/Knapsack-DP-기본편1 [plzrun's algorithm]
