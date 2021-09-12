@@ -10,3 +10,14 @@ for _ in range(n):
     else:
         query_2.append((a,i,j,k))
 
+query_2.sort(key=lambda x:x[3])
+print(query_1)
+print(query_2)
+
+class Node:
+    def __init__(self):
+        self.lc = None
+        self.rc = None
+        self.value = 0
+
+
