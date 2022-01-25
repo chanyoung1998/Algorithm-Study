@@ -1,32 +1,38 @@
 import sys
 
 n,m,k = map(int,sys.stdin.readline().rstrip().split())
-tabs = []
-dp = [[[-sys.maxsize for _ in range(500)] for _ in range(m+1)] for _ in range(n)]
+tabs = [ ]
+#print(len(tabs))
+dp = [[[-1 for _ in range(501)] for _ in range(m+1)] for _ in range(n+1)]
 ret = sys.maxsize
 for _ in range(n):
+    #cpu,memory,priority
     tabs.append(tuple(map(int,sys.stdin.readline().rstrip().split())))
 
-'''for j in range(m):
-    for p in range(500):
-        if tabs[0][0] <= j and tabs[0][2] <= p:
-            dp[0][j][p] = tabs[0][1]
-'''
+dp[0][0][0] = 0
+
 for i in range(n):
     for j in range(m+1):
-        for p in range(500):
-            if j - tabs[i][0] >= 0 and p-tabs[i][2] >= 0:
-                dp[i][j][p] = max(dp[i-1][j][p],dp[i-1][j-tabs[i][0]][p-tabs[i][2]] + tabs[i][1])
-            else:
-                if i -1 >= 0:
-                    dp[i][j][p] = max(dp[i-1][j][p],0)
-            if j >= m and dp[i][j][p] >= k:
-                ret = min(ret, p)
-                # print(dp[i][j][p])
-                # print(i,j,p)
+        for p in range(501):
+
+            if dp[i][j][p] == -1:
+                continue
+            cpu,mem,pri = tabs[i]
+            #i번 째 선택 안 했을 경우
+            dp[i+1][j][p] = max(dp[i][j][p],dp[i+1][j][p])
+            cpu = min(cpu+j,m)
+            #i번 째 선택 했을 경우
+            dp[i+1][cpu][p+pri] = max(dp[i+1][cpu][p+pri],dp[i][j][p] + mem)
 
 
-if ret == sys.maxsize:
+ret = 1000
+
+for p in range(501):
+    if dp[n][m][p] >= k:
+        ret = min(ret,p)
+
+
+if ret == 1000:
     print(-1)
 else:
     print(ret)
