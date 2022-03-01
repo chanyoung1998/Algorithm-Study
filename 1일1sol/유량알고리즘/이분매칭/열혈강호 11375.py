@@ -2,10 +2,10 @@ import sys
 
 n,m = map(int,sys.stdin.readline().rstrip().split())
 adjlist = []
-jobs = [0 for _ in range(n+1)]
-visit = [False for _ in range(n+1)]
+jobs = [-1 for _ in range(m)]
+visit = [False for _ in range(m)]
 for _ in range(n):
-    inputs = list(map(int,sys.stdin.readline().rstrip().split()))
+    inputs = list(map(lambda x:int(x)-1,sys.stdin.readline().rstrip().split()))
     adjlist.append(inputs[1:])
 
 
@@ -16,11 +16,15 @@ def dfs(x):
             continue
 
         visit[next] = True
-        if jobs[next] == 0 or dfs(jobs[next]):
+        if jobs[next] == -1 or dfs(jobs[next]):
             jobs[next] = x
             return True
 
     return False
 
-
- 
+cnt = 0
+for i in range(n):
+    visit = [False for _ in range(m)]
+    if dfs(i):
+        cnt += 1
+print(cnt)

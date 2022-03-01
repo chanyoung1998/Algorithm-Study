@@ -8,7 +8,7 @@ def solution1급3차5번(phrases, second):
     print(display[start:start + 14])
     return
 
-solution1급3차5번("happy-birthday",3)
+
 
 
 def solution1급3차6번(n):
@@ -34,7 +34,7 @@ def solution1급3차6번(n):
 
     return answer
 
-print(solution1급3차6번(1000))
+
 
 def 단어세기():
 
@@ -53,4 +53,16 @@ def 단어세기():
     for word in ret.keys():
         print(word,":",ret[word])
 
-단어세기()
+
+array = [3,4,1,2]
+ret = [0 for _ in range(3)]
+def comb(idx,k):
+    if k == 3:
+        print(ret)
+        return
+    for i in range(idx,4):
+        ret[k] = array[i]
+        comb(i+1,k+1)
+
+
+comb(0,0)
