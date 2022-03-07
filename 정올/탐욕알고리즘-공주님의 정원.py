@@ -43,6 +43,8 @@ while i < len(flower):
 
 
     i = j
+
+
 if time >= 1201:
     print(cnt)
 else:

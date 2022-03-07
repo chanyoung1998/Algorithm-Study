@@ -1,7 +1,7 @@
 import sys
 
 n,m = map(int,sys.stdin.readline().rstrip().split())
-logs = [[_]+list(map(int,sys.stdin.readline().rstrip().split())) for _ in range(n)]
+logs = [[i]+list(map(int,sys.stdin.readline().rstrip().split())) for i in range(n)]
 logs.sort(key=lambda x:(x[1]))
 link = [i for i in range(n)]
 # print(logs)
