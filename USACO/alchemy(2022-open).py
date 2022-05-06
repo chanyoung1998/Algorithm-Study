@@ -13,18 +13,18 @@ def check(metal,cnt):
     if units[metal] >= cnt:
         units[metal] -= cnt
         return True
-
-    if not recipe[metal]:
-        return False
-
-    need = cnt - units[metal]
-
-    for ingredient in recipe[metal]:
-        if not check(ingredient,need):
+    else:
+        if not recipe[metal]:
             return False
 
-    units[metal] = 0
-    return True
+        need = cnt - units[metal]
+
+        for ingredient in recipe[metal]:
+            if not check(ingredient,need):
+                return False
+
+        units[metal] = 0
+        return True
 
 lo = 0
 hi = 10001
