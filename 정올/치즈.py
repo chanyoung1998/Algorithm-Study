@@ -12,7 +12,7 @@ for _ in maps:
 
 dx = [-1,1,0,0]
 dy = [0,0,-1,1]
-def backtracking(i,j):
+def dfs(i,j):
     global cheese_cnt
 
 
@@ -29,7 +29,7 @@ def backtracking(i,j):
                 p = i + dx[dir]
                 q = j + dy[dir]
                 if 0 <= p < n and 0 <= q < m:
-                    backtracking(p,q)
+                    dfs(p,q)
 
 
 
@@ -38,7 +38,7 @@ time = 0
 while cheese_cnt != 0:
     visit = [[False for _ in range(m)] for _ in range(n)]
     last_cheese = cheese_cnt
-    backtracking(0,0)
+    dfs(0,0)
     time += 1
 
 print(last_cheese,time,sep='\n')
