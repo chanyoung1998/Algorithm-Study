@@ -32,8 +32,8 @@ def huffman(n, PQ):
         PQ.put((r.freq, r))
     return PQ.get()[1]
 
-codes = ['b','e','c','a','d','f']
-freqs = [5, 10, 12, 16, 17, 25]
+codes = ['a','e','c','a','d','f']
+freqs = [405, 10, 12, 16, 17, 25]
 from queue import PriorityQueue
 PQ = PriorityQueue()
 for i in range(len(codes)):
@@ -46,3 +46,20 @@ root.preorder()
 print("\nInorder:", end=" ")
 root.inorder()
 print()
+
+huff_dict = {}
+def mapping_Bit(node,string):
+
+    if node.left:
+        mapping_Bit(node.left,string+'0')
+    elif node.right:
+        mapping_Bit(node.right,string+'1')
+    else:
+        huff_dict[node.symbol] = string
+
+    return
+
+mapping_Bit(root,'')
+
+print(huff_dict)
+
