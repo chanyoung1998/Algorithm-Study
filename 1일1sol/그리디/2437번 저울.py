@@ -1,6 +1,4 @@
-import heapq
 import sys
-from heapq import heappush,heappop,heapify
 n = int(sys.stdin.readline())
 weights = list(map(int,sys.stdin.readline().rstrip().split()))
 weights.sort()

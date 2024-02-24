@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Fibonacci{
 
     public static int[] count = new int[100];
@@ -11,8 +14,8 @@ public class Fibonacci{
         for (int c : count) {
             if(i > n ) break;
             System.out.println("F("+i+++")"+"메소드 실행횟수:" + c);
-
         }
+
     }
 
     public static int fibonacci(int n) {
