@@ -33,8 +33,8 @@ dq.append((c[0][0],c[0][1],0,3))
 while dq:
     x, y, cost, dir = dq.popleft()
 
+    nx , ny = x + dirX[dir], y + dirY[dir]
     for i in range(4):
-        nx , ny = x + dirX[i], y + dirY[i]
         if 0 <= nx < H and 0 <= ny < W and MAPS[nx][ny] != '*':
             if dir == i:
                 if check[nx][ny][i] > cost:
