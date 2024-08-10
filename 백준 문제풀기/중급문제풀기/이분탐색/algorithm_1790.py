@@ -35,10 +35,10 @@ def binarysearch(n,k):
 
     return answer
 
-answer = binarysearch(n,k)
-print(answer)
-length = calc(answer)
-ans = str(answer)
+cnt = binarysearch(n, k)
+print(cnt)
+length = calc(cnt)
+ans = str(cnt)
 
 if calc(n) < k:
     print(-1)

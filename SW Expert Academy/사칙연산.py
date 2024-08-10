@@ -49,5 +49,5 @@ def calulate(value1, operator, value2):
 
 test_case = 10
 for tc in range(test_case):
-    answer = solution()
-    print('#{} {}'.format(tc + 1, answer))
+    cnt = solution()
+    print('#{} {}'.format(tc + 1, cnt))

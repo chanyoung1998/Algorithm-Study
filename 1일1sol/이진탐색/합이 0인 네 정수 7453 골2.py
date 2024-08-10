@@ -58,14 +58,14 @@ for i in range(n):
         CD.append(C[i] + D[j])
 
 CD.sort()
-answer = 0
+cnt = 0
 for i in range(n):
     for j in range(n):
         target = (A[i] + B[j]) * -1
         l = lower(target)
         u = upper(target)
-        answer +=  (u-l)
+        cnt +=  (u - l)
 
-print(answer)
+print(cnt)
 
 
